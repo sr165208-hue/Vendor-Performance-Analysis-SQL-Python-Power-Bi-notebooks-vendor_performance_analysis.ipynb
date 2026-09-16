@@ -1,399 +1,122 @@
-# 📊 Vendor Performance Analysis | SQL • Python • Power BI
+# 📊 Vendor Performance Analysis | SQL · Python · Power BI
 
-An end-to-end Data Analytics project that analyzes vendor performance, inventory efficiency, and sales profitability to help retail businesses make data-driven purchasing and inventory decisions.
+An end-to-end data analytics project analyzing vendor performance, inventory efficiency, and sales profitability to help retail businesses make data-driven purchasing and inventory decisions.
 
----
-
-## 📌 Table of Contents
-
-- Overview
-- Business Problem
-- Objectives
-- Dataset
-- Tech Stack
-- Project Architecture
-- Data Pipeline
-- Data Cleaning & Preparation
-- Exploratory Data Analysis
-- Business Questions
-- Key Insights
-- Dashboard
-- Project Structure
-- How to Run
-- Business Recommendations
-- Future Improvements
+![SQL](https://img.shields.io/badge/SQL-4479A1?style=flat&logo=postgresql&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
+![Pandas](https://img.shields.io/badge/Pandas-150458?style=flat&logo=pandas&logoColor=white)
+![Power BI](https://img.shields.io/badge/Power%20BI-F2C811?style=flat&logo=powerbi&logoColor=black)
+![SciPy](https://img.shields.io/badge/SciPy-8CAAE6?style=flat&logo=scipy&logoColor=white)
 
 ---
 
-# 📖 Overview
+## 📖 Overview
 
-Retail businesses generate large volumes of purchasing, inventory, and sales data every day. Without proper analysis, organizations may suffer from:
+Retail businesses generate large volumes of purchasing, inventory, and sales data every day. Without proper analysis, this can lead to overstocked inventory, vendor over-dependency, poor pricing decisions, and reduced profitability.
 
-- Overstocked inventory
-- Vendor dependency
-- Poor pricing strategies
-- Low inventory turnover
-- Reduced profitability
+This project builds a complete analytics pipeline — **SQL for ETL, Python for exploratory and statistical analysis, and Power BI for the final interactive dashboard** — to evaluate vendor performance and surface actionable business insights.
 
-This project builds a complete analytics pipeline using **SQL**, **Python**, and **Power BI** to evaluate vendor performance and uncover actionable business insights.
-
----
-
-# 🎯 Business Problem
-
-The retail company wants to answer the following questions:
+## 🎯 Business Problem
 
 - Which vendors generate the highest profits?
-- Which brands require promotional efforts?
-- Does bulk purchasing reduce procurement costs?
+- Which brands need promotional support?
+- Does bulk purchasing meaningfully reduce procurement costs?
 - How much capital is locked in unsold inventory?
-- Which vendors should be prioritized or reconsidered?
-- Are differences in vendor profitability statistically significant?
+- Which vendors should be prioritized, and which reconsidered?
+- Are the differences in vendor profitability statistically significant?
 
----
+## 🗂️ Dataset
 
-# 🎯 Project Objectives
+Retail data merged across Sales, Purchases, Purchase Prices, Inventory, and Vendors into a single vendor summary table for analysis.
 
-- Analyze vendor contribution to revenue and profit
-- Identify slow-moving inventory
-- Evaluate vendor profitability
-- Measure bulk purchase cost savings
-- Discover underperforming brands
-- Validate business assumptions using statistical testing
-- Build an interactive Power BI dashboard for decision-making
-
----
-
-# 📂 Dataset
-
-The project uses multiple retail datasets including:
-
-- Sales
-- Purchases
-- Purchase Prices
-- Inventory
-- Vendors
-
-These datasets are merged to create a vendor summary table for analysis.
-
----
-
-# 🛠 Tech Stack
+## 🛠️ Tech Stack
 
 | Tool | Purpose |
-|-------|----------|
-| SQL | Data Cleaning, ETL, Aggregation |
-| Python | EDA & Statistical Analysis |
-| Pandas | Data Manipulation |
-| Matplotlib | Visualization |
-| Seaborn | Statistical Visualization |
-| SciPy | Hypothesis Testing |
-| Power BI | Interactive Dashboard |
-| Git & GitHub | Version Control |
+|---|---|
+| **SQL** | Data cleaning, ETL, aggregation |
+| **Python (Pandas)** | Data manipulation and EDA |
+| **Matplotlib / Seaborn** | Visualization |
+| **SciPy** | Hypothesis testing |
+| **Power BI** | Interactive dashboard |
 
----
-
-# ⚙ Project Architecture
+## ⚙️ Pipeline
 
 ```
-CSV Files
-     │
-     ▼
-SQL Database
-     │
-     ▼
-Data Cleaning & ETL
-     │
-     ▼
-Vendor Summary Table
-     │
-     ├────────► Python EDA
-     │               │
-     │               ▼
-     │        Statistical Analysis
-     │
-     ▼
-Power BI Dashboard
+CSV files → SQL database → ETL & vendor summary table
+                                     │
+                       ┌─────────────┴─────────────┐
+                       ▼                           
+              Python EDA & statistical testing        
+                       │
+                       ▼
+              Power BI dashboard
 ```
 
----
+## 🧹 Data Cleaning
 
-# 🔄 Data Pipeline
+- Removed records with Gross Profit ≤ 0, Profit Margin ≤ 0, or Sales Quantity = 0
+- Handled missing values and converted data types
+- Merged lookup tables into a vendor-level summary
+- Checked for duplicates and detected outliers
 
-### Step 1
+## 📊 Dashboard Preview
 
-Import raw CSV files into SQL database.
+![Vendor Performance Dashboard](dashboard%20(1).png)
 
-### Step 2
+## 💡 Key Insights
 
-Perform ETL using SQL:
+- **198 brands** show low sales but high profit margins — strong candidates for increased marketing and promotion
+- **Vendor concentration risk:** the top 10 vendors account for roughly **65.7%** of total purchases, indicating heavy dependence on a small supplier base
+- **Bulk purchasing pays off:** large purchase orders reduce per-unit procurement cost by approximately **72%**
+- **Over $2.7M** in inventory value currently sits unsold
+- **Profitability gap:** high-performing vendors average **31.17%** profit margin vs. **41.55%** for low-performing vendors, pointing to differing pricing and sales strategies
+- **Hypothesis testing** (SciPy) confirms the difference in profit margins between vendor groups is statistically significant
 
-- Joins
-- Filtering
-- Aggregations
-- Vendor Summary Creation
+## ✅ Business Recommendations
 
-### Step 3
+- Reduce dependency on top-concentrated vendors
+- Promote high-margin, low-sales brands
+- Expand bulk purchasing where it's economically justified
+- Improve inventory turnover and liquidate slow-moving stock
+- Monitor vendor performance continuously via the dashboard
 
-Load cleaned data into Python.
+## 📁 Repository Contents
 
-### Step 4
+| File | Description |
+|---|---|
+| [`vendor_performance_analysis.ipynb`](vendor_performance_analysis.ipynb) | Main analysis notebook |
+| [`exploratory_data_analysis.ipynb`](exploratory_data_analysis.ipynb) | EDA notebook |
+| [`ingestion_db.py`](ingestion_db.py) | Loads raw CSVs into the SQL database |
+| [`get_vendor_summary.py`](get_vendor_summary.py) | Builds the vendor summary table |
+| [`vendor_performance.pbix`](vendor_performance.pbix) | Power BI dashboard file |
+| [`Vendor Performance Report (1).pdf`](Vendor%20Performance%20Report%20(1).pdf) | Written report/summary |
 
-Perform:
-
-- Exploratory Data Analysis
-- Correlation Analysis
-- Outlier Detection
-- Hypothesis Testing
-
-### Step 5
-
-Build an interactive dashboard in Power BI.
-
----
-
-# 🧹 Data Cleaning & Preparation
-
-The following preprocessing steps were performed:
-
-- Removed records with:
-  - Gross Profit ≤ 0
-  - Profit Margin ≤ 0
-  - Sales Quantity = 0
-
-- Handled missing values
-- Converted data types
-- Merged lookup tables
-- Created vendor-level summary table
-- Checked duplicate records
-- Detected outliers
-
----
-
-# 📈 Exploratory Data Analysis
-
-The analysis focused on:
-
-### Profitability Analysis
-
-- Gross Profit
-- Profit Margin
-- Vendor Revenue
-
-### Inventory Analysis
-
-- Unsold Inventory
-- Inventory Turnover
-
-### Pricing Analysis
-
-- Purchase Price
-- Actual Price
-- Sales Price
-
-### Correlation Analysis
-
-Relationships between:
-
-- Purchase Quantity
-- Sales Quantity
-- Profit Margin
-- Sales Price
-- Gross Profit
-
----
-
-# ❓ Business Questions
-
-### 1. Which brands need promotional support?
-
-Identify brands with:
-
-- Low sales
-- High profit margins
-
----
-
-### 2. Which vendors dominate purchases?
-
-Measure vendor contribution and dependency risk.
-
----
-
-### 3. Does bulk purchasing reduce costs?
-
-Compare unit purchase prices across different order quantities.
-
----
-
-### 4. How much inventory remains unsold?
-
-Calculate inventory value that is locked in stock.
-
----
-
-### 5. Which vendors are the most profitable?
-
-Compare high-performing and low-performing vendors.
-
----
-
-### 6. Are profitability differences statistically significant?
-
-Perform hypothesis testing using SciPy.
-
----
-
-# 📊 Key Insights
-
-### ✅ 198 brands
-
-Low sales but high profit margins.
-
-**Recommendation:** Increase marketing and promotions.
-
----
-
-### ✅ Vendor Concentration
-
-Top 10 vendors contribute approximately **65.7%** of total purchases.
-
-**Business Risk:** Heavy dependence on a small group of suppliers.
-
----
-
-### ✅ Bulk Purchasing
-
-Large purchase orders reduce procurement costs by approximately **72% per unit**.
-
----
-
-### ✅ Unsold Inventory
-
-More than **$2.7 Million** worth of inventory remains unsold.
-
----
-
-### ✅ Vendor Profitability
-
-Average Profit Margin
-
-High-performing Vendors
-
-- **31.17%**
-
-Low-performing Vendors
-
-- **41.55%**
-
-This indicates vendors follow different pricing and sales strategies.
-
----
-
-### ✅ Hypothesis Testing
-
-Statistical testing confirms a significant difference in profit margins between vendor groups.
-
----
-
-# 📊 Dashboard
-
-The Power BI dashboard provides:
-
-- Executive KPI Cards
-- Vendor-wise Sales Analysis
-- Profit Margin Analysis
-- Purchase Trends
-- Inventory Analysis
-- Bulk Purchase Savings
-- Interactive Filters
-
----
-
-# 📁 Project Structure
-
-```
-Vendor-Performance-Analysis/
-│
-├── dashboard/
-│   └── Vendor Performance Dashboard.pbix
-│
-├── notebooks/
-│   ├── exploratory_data_analysis.ipynb
-│   └── vendor_performance_analysis.ipynb
-│
-├── scripts/
-│   ├── ingestion_db.py
-│   └── get_vendor_summary.py
-│
-├── sql/
-│   ├── database_schema.sql
-│   ├── vendor_summary.sql
-│   └── analysis_queries.sql
-│
-├── images/
-│   └── dashboard.png
-│
-├── data/
-│
-├── requirements.txt
-│
-└── README.md
-```
-
----
-
-# 🚀 How to Run
-
-### Clone Repository
+## 🚀 How to Run
 
 ```bash
-git clone https://github.com/yourusername/Vendor-Performance-Analysis.git
+git clone https://github.com/sr165208-hue/Vendor-Performance-Analysis-SQL-Python-Power-Bi-notebooks-vendor_performance_analysis.ipynb.git
+cd Vendor-Performance-Analysis-SQL-Python-Power-Bi-notebooks-vendor_performance_analysis.ipynb
+
+# Load raw data into the SQL database
+python ingestion_db.py
+
+# Build the vendor summary table
+python get_vendor_summary.py
+
+# Then open the notebooks in Jupyter, or open vendor_performance.pbix in Power BI Desktop
 ```
 
-Install Dependencies
+## 🔮 Future Enhancements
 
-```bash
-pip install -r requirements.txt
-```
+- Demand forecasting using machine learning
+- Vendor risk scoring
+- Automated ETL pipeline
+- Cloud deployment (Azure/AWS)
 
-Import data into SQL
+## 👤 Author
 
-```bash
-python scripts/ingestion_db.py
-```
-
-Generate Vendor Summary
-
-```bash
-python scripts/get_vendor_summary.py
-```
-
-Run Jupyter notebooks.
-
-Open the Power BI dashboard.
-
----
-
-# 💡 Business Recommendations
-
-- Reduce dependency on top vendors.
-- Promote high-margin, low-sales brands.
-- Increase bulk purchasing where economically beneficial.
-- Improve inventory turnover.
-- Liquidate slow-moving inventory.
-- Continuously monitor vendor performance through dashboards.
-
----
-
-# 🔮 Future Enhancements
-
-- Demand Forecasting using Machine Learning
-- Sales Prediction Models
-- Vendor Risk Scoring
-- Automated ETL Pipeline
-- Cloud Deployment (Azure/AWS)
-- Real-time Dashboard Integration
+**Sanjay Rawat**
+[LinkedIn](https://linkedin.com/in/sanjay-rawat-a0b157290) · [GitHub](https://github.com/sr165208-hue)
 
 ---
 
